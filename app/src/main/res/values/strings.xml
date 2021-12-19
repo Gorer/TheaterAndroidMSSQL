@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">My MS SQL Server Database Connection</string>
+    <string name="sql">SQL</string>
+    <string name="log_in">Log in</string>
+    <string name="register">Register</string>
+    <string name="password">Пароль</string>
+    <string name="login">Логин</string>
+    <string name="search">Поиск</string>
+    <string name="to_find">Найти</string>
+    <string-array name="spinner_tables">
+        <item>theater_production</item>
+        <item>genres</item>
+        <item>age_categories</item>
+        <item>feedbacks</item>
+        <item>comments</item>
+        <item>adress_theater_production</item>
+        <item>tickets</item>
+    </string-array>
+</resources>
