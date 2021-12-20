@@ -1,8 +1,22 @@
 package com.example.mymssqlserverdatabaseconnection.Requests;
 
+import com.example.mymssqlserverdatabaseconnection.ConnectionHelper;
+import com.example.mymssqlserverdatabaseconnection.Models.Genre;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+
 public class Requests {
+    private ConnectionHelper connectionHelper;
+    Connection connection;
+    String connectionResult = "";
 
     public static String SEARCH(String tableName, String text) {
+
+
         switch (tableName) {
             case "theater_production":
                 return "select * from theater_production where concat(id_theater_production, " +
@@ -29,4 +43,48 @@ public class Requests {
                 return null;
         }
     }
+
+    public List<Genre> getGenresFromDb(String genres_query) {
+        List<Genre> genres = new ArrayList<>();
+        try {
+            connection = connectionHelper.connection();
+            if (connection != null) {
+                String query = "Select * from genres where id_genre=" + genres_query + ";";
+                System.out.println(query);
+                Statement st = connection.createStatement();
+                ResultSet rs = st.executeQuery(query);
+                while (rs.next()) {
+                    Genre item = new Genre();
+                    //System.out.println(rs.getString("id_genre"));
+                    //TODO обработка если в результате выполнения вернется null
+                    item.setId_genre(rs.getInt("id_genre"));
+                    item.setName_genre(rs.getString("id_route_pfk"));
+                }
+            } else {
+                connectionResult = "Check your connection";
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return genres;
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

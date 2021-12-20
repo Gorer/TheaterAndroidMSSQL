@@ -1,71 +1,63 @@
 package com.example.mymssqlserverdatabaseconnection;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
-import android.Manifest;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.os.StrictMode;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.example.mymssqlserverdatabaseconnection.Adapters.MainAdapter;
+import com.example.mymssqlserverdatabaseconnection.Models.Genre;
 import com.example.mymssqlserverdatabaseconnection.Requests.Requests;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
+    private MainAdapter mainAdapter;
     private TextView textView;
     private EditText editTextSearch;
     private String tableName;
     private Spinner spinnerTables;
-    private String text;
     private String searchText;
-    //private Requests requestsTable;
-
-    private static String ip = "192.168.0.29";
-    private static String port = "1433";
-    private static String Classes = "net.sourceforge.jtds.jdbc.Driver";
-    private static String database = "Theater_DB";
-    private static String username = "theater_admin";
-    private static String password = "25456585";
-    private static String url = "jdbc:jtds:sqlserver://"+ip+":"+port+"/"+database;
+    private RecyclerView rcView;
+    private Requests requestsObject;
 
     private Connection connection = null;
+    private ConnectionHelper connectionHelper;
+    String connectionResult = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.INTERNET},
-                PackageManager.PERMISSION_GRANTED);
-        textView = findViewById(R.id.textViewResult);
+        textView = findViewById(R.id.recyclerViewResult);
         editTextSearch = findViewById(R.id.editTextSearch);
         spinnerTables = findViewById(R.id.spinnerTables);
-
-        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-        StrictMode.setThreadPolicy(policy);
-        try {
-            Class.forName(Classes);
-            connection = DriverManager.getConnection(url, username,password);
-            textView.setText("SUCCESS");
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-            textView.setText("ERROR");
-        } catch (SQLException e) {
-            e.printStackTrace();
-            textView.setText("FAILURE");
-        }
+        connectionHelper = ConnectionHelper.getInstance();
+        requestsObject = new Requests();
     }
-/// отсюда
+
+    private void setRcView(String genre){
+        rcView = findViewById(R.id.recyclerViewResult);
+        List<Genre> genres = requestsObject.getGenresFromDb(genre);//.getFlightsFromDb(airport);
+        if (genres != null){
+            rcView.setAdapter(mainAdapter);
+//                   mainViewModel.setDisplayList(noteList);
+            mainAdapter.updateAdapter(genres);
+        }
+        rcView.setLayoutManager(new LinearLayoutManager(this));
+    }
+
     public void setTableName() {
         int position = spinnerTables.getSelectedItemPosition();
         tableName = getTableNameFromSpinner(position);
@@ -77,14 +69,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void sqlButton(View view){
-        text = editTextSearch.getText().toString();
+        connection = connectionHelper.connection();
+        searchText = editTextSearch.getText().toString();
         setTableName();
         if (connection!=null) {
             Statement statement = null;
             try {
                 statement = connection.createStatement();
                 ResultSet resultSet = statement.executeQuery(
-                         Requests.SEARCH(tableName, text));
+                         Requests.SEARCH(tableName, searchText));
                 while (resultSet.next()) {
                     textView.setText(resultSet.getString("theater_name"));
                 }
