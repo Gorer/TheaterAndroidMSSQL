@@ -16,4 +16,11 @@
         <item>adress_theater_production</item>
         <item>tickets</item>
     </string-array>
+    <string-array name="theater_production_columns">
+        <item></item>
+    </string-array>
+    <string-array name="genres_columns">
+        <item>id_genre</item>
+        <item>name_genre</item>
+    </string-array>
 </resources>

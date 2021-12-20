@@ -12,6 +12,8 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.example.mymssqlserverdatabaseconnection.Requests.GenresRequests;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -79,8 +81,7 @@ public class MainActivity extends AppCompatActivity {
             try {
                 statement = connection.createStatement();
                 ResultSet resultSet = statement.executeQuery(
-                        "Select * from " + tableName + " where name_genre>=\'" + text + "\';");
-                ////// До сюда
+                        GenresRequests.SEARCH + "\'%" + text + "%\';");
                 while (resultSet.next()) {
                     textView.setText(resultSet.getString("name_genre"));
                 }
