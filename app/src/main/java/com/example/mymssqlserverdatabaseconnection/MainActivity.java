@@ -12,7 +12,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.example.mymssqlserverdatabaseconnection.Requests.GenresRequests;
+import com.example.mymssqlserverdatabaseconnection.Requests.Requests;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -26,6 +26,9 @@ public class MainActivity extends AppCompatActivity {
     private EditText editTextSearch;
     private String tableName;
     private Spinner spinnerTables;
+    private String text;
+    private String searchText;
+    //private Requests requestsTable;
 
     private static String ip = "192.168.0.29";
     private static String port = "1433";
@@ -65,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
 /// отсюда
     public void setTableName() {
         int position = spinnerTables.getSelectedItemPosition();
-        tableName = getTableNameFromSpinner(position);;
+        tableName = getTableNameFromSpinner(position);
     }
 
     public String getTableNameFromSpinner(int position) {
@@ -74,16 +77,16 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void sqlButton(View view){
-        String text = editTextSearch.getText().toString();
+        text = editTextSearch.getText().toString();
         setTableName();
-        if (connection!=null){
+        if (connection!=null) {
             Statement statement = null;
             try {
                 statement = connection.createStatement();
                 ResultSet resultSet = statement.executeQuery(
-                        GenresRequests.SEARCH + "\'%" + text + "%\';");
+                         Requests.SEARCH(tableName, text));
                 while (resultSet.next()) {
-                    textView.setText(resultSet.getString("name_genre"));
+                    textView.setText(resultSet.getString("theater_name"));
                 }
             } catch (SQLException e) {
                 e.printStackTrace();
