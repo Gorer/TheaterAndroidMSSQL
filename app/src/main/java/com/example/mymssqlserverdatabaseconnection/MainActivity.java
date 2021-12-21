@@ -1,10 +1,15 @@
 package com.example.mymssqlserverdatabaseconnection;
 
+import static android.content.ContentValues.TAG;
+
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -13,46 +18,74 @@ import android.widget.TextView;
 import com.example.mymssqlserverdatabaseconnection.Adapters.MainAdapter;
 import com.example.mymssqlserverdatabaseconnection.Models.Genre;
 import com.example.mymssqlserverdatabaseconnection.Requests.Requests;
+import com.example.mymssqlserverdatabaseconnection.ViewModels.MainViewModel;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
     private MainAdapter mainAdapter;
-    private TextView textView;
+    private MainViewModel mainViewModel;
+    //private RecyclerView textView;
     private EditText editTextSearch;
-    private String tableName;
+    private String tableName = "genres";
     private Spinner spinnerTables;
-    private String searchText;
+    private String searchText = "genres";
     private RecyclerView rcView;
-    private Requests requestsObject;
+    //private Requests requestsObject;
 
-    private Connection connection = null;
-    private ConnectionHelper connectionHelper;
-    String connectionResult = "";
+    //private Connection connection = null;
+    //private ConnectionHelper connectionHelper;
+    //String connectionResult = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        textView = findViewById(R.id.recyclerViewResult);
+        //mainViewModel = new ViewModelProvider(this).get(MainViewModel.class);
+        /*try {
+            mainAdapter = new MainAdapter(this);
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+            System.out.println("caught");
+        }*/
+
         editTextSearch = findViewById(R.id.editTextSearch);
         spinnerTables = findViewById(R.id.spinnerTables);
-        connectionHelper = ConnectionHelper.getInstance();
-        requestsObject = new Requests();
+        initRecyclerView();
+        /*rcView = findViewById(R.id.recyclerViewResult);
+        rcView.setAdapter(mainAdapter);
+        rcView.setLayoutManager(new LinearLayoutManager(this));*/
+    }
+    /*@Override
+    public void onResume() {
+        super.onResume();
+        setRcView();
+    }*/
+
+    private void initRecyclerView() {
+        rcView = findViewById(R.id.recyclerViewResult);
+        rcView.setLayoutManager(new LinearLayoutManager(this));
+
+        mainAdapter = new MainAdapter(this);
+        rcView.setAdapter(mainAdapter);
+        mainViewModel = new ViewModelProvider(this).get(MainViewModel.class);
+        setRcView();
     }
 
-    private void setRcView(String genre){
-        rcView = findViewById(R.id.recyclerViewResult);
-        List<Genre> genres = requestsObject.getGenresFromDb(genre);//.getFlightsFromDb(airport);
+    private void setRcView(){
+        //rcView = findViewById(R.id.recyclerViewResult);
+        List<Genre> genres = mainViewModel.getGenresFromDb(tableName, searchText);
+
         if (genres != null){
-            rcView.setAdapter(mainAdapter);
-//                   mainViewModel.setDisplayList(noteList);
+            Log.d(TAG, "genres != null");
+            //Log.d(TAG, )
             mainAdapter.updateAdapter(genres);
         }
         rcView.setLayoutManager(new LinearLayoutManager(this));
@@ -69,6 +102,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void sqlButton(View view){
+        searchText = editTextSearch.getText().toString();
+        setTableName();
+        setRcView();
+    }
+
+    /*public void sqlButton(View view){
         connection = connectionHelper.connection();
         searchText = editTextSearch.getText().toString();
         setTableName();
@@ -88,5 +127,5 @@ public class MainActivity extends AppCompatActivity {
         else {
             textView.setText("Connection is null");
         }
-    }
+    }*/
 }

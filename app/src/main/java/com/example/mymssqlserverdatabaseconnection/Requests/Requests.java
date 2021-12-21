@@ -14,6 +14,8 @@ public class Requests {
     Connection connection;
     String connectionResult = "";
 
+
+
     public static String SEARCH(String tableName, String text) {
 
 
@@ -44,30 +46,25 @@ public class Requests {
         }
     }
 
-    public List<Genre> getGenresFromDb(String genres_query) {
+    /*public List<Genre> getGenresFromDb(String tableName, String searchText) {
         List<Genre> genres = new ArrayList<>();
         try {
             connection = connectionHelper.connection();
             if (connection != null) {
-                String query = "Select * from genres where id_genre=" + genres_query + ";";
-                System.out.println(query);
-                Statement st = connection.createStatement();
-                ResultSet rs = st.executeQuery(query);
-                while (rs.next()) {
+                Statement statement = connection.createStatement();
+                ResultSet resultSet = statement.executeQuery(Requests.SEARCH(tableName, searchText));
+                while (resultSet.next()) {
                     Genre item = new Genre();
-                    //System.out.println(rs.getString("id_genre"));
-                    //TODO обработка если в результате выполнения вернется null
-                    item.setId_genre(rs.getInt("id_genre"));
-                    item.setName_genre(rs.getString("id_route_pfk"));
+                    item.setId_genre(resultSet.getInt("id_genre"));
+                    item.setName_genre(resultSet.getString("name_genre"));
+                    genres.add(item);
                 }
-            } else {
-                connectionResult = "Check your connection";
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
         return genres;
-    }
+    }*/
 }
 
 
