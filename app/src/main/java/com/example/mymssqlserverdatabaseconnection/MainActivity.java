@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.example.mymssqlserverdatabaseconnection.Adapters.MainAdapter;
 import com.example.mymssqlserverdatabaseconnection.Models.Genre;
+import com.example.mymssqlserverdatabaseconnection.Models.Item;
 import com.example.mymssqlserverdatabaseconnection.Requests.Requests;
 import com.example.mymssqlserverdatabaseconnection.ViewModels.MainViewModel;
 
@@ -33,9 +34,9 @@ public class MainActivity extends AppCompatActivity {
     private MainViewModel mainViewModel;
     //private RecyclerView textView;
     private EditText editTextSearch;
-    private String tableName = "genres";
+    private String tableName;// = "genres";
     private Spinner spinnerTables;
-    private String searchText = "genres";
+    private String searchText;// = "genres";
     private RecyclerView rcView;
     //private Requests requestsObject;
 
@@ -81,12 +82,14 @@ public class MainActivity extends AppCompatActivity {
 
     private void setRcView(){
         //rcView = findViewById(R.id.recyclerViewResult);
-        List<Genre> genres = mainViewModel.getGenresFromDb(tableName, searchText);
-
-        if (genres != null){
-            Log.d(TAG, "genres != null");
-            //Log.d(TAG, )
-            mainAdapter.updateAdapter(genres);
+        //List<Genre> genres = mainViewModel.getGenresFromDb(tableName, searchText);
+//getItemsFromDb
+        List<Item> items = mainViewModel.getItemsFromDb(tableName, searchText);
+        if (!items.isEmpty()){
+            Log.d(TAG, "items != null");
+            for (int i = 0; i < items.size(); i++)
+            Log.d(TAG, items.get(i).getItemType());
+            mainAdapter.updateAdapter(items);
         }
         rcView.setLayoutManager(new LinearLayoutManager(this));
     }

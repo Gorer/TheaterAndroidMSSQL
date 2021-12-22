@@ -1,8 +1,11 @@
 package com.example.mymssqlserverdatabaseconnection.Adapters;
 
+import static android.content.ContentValues.TAG;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +15,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mymssqlserverdatabaseconnection.Models.Genre;
+import com.example.mymssqlserverdatabaseconnection.Models.Item;
+import com.example.mymssqlserverdatabaseconnection.Models.TheaterProduction;
 import com.example.mymssqlserverdatabaseconnection.R;
 
 import java.util.ArrayList;
@@ -19,12 +24,12 @@ import java.util.List;
 
 public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MyViewHolder> {
     private final Context context;
-    private List<Genre> mainArray;
+    private List<Item> mainArray;
 
     // Адаптер, отвечающий за заполнение списка recyclerView1
     public MainAdapter(Context context) {
         this.context = context;
-        mainArray = new ArrayList<>();
+        this.mainArray = new ArrayList<Item>();
     }
 
     @NonNull
@@ -37,8 +42,6 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MyViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) { // Заполнение
-        //holder.tvTitle.setText(this.mainArray.get(position).getId_genre()
-        //        + this.mainArray.get(position).getName_genre());
         holder.setData(mainArray.get(position));
     }
 
@@ -47,7 +50,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MyViewHolder> 
         return mainArray.size();
     }
 
-    public Genre getGenre(int position){
+    public Item getGenre(int position){
         return mainArray.get(position);
     }
 
@@ -55,8 +58,6 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MyViewHolder> 
     static class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private final TextView tvTitle;
         private final Context context;
-        private Genre localFlight;
-
 
         public MyViewHolder(@NonNull View itemView, Context context) {
             super(itemView);
@@ -66,10 +67,28 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MyViewHolder> 
         }
 
         @SuppressLint("SetTextI18n")
-        public void setData(Genre flight) {
-            localFlight = flight;
+        public void setData(Item item) {
             // заполнение заголовка для элемента списка
-            tvTitle.setText(flight.getId_genre() + " | " + flight.getName_genre());
+            switch (item.getItemType()) {
+                case "TheaterProduction":
+                    TheaterProduction theaterProduction = (TheaterProduction) item;
+                    Log.d(TAG,theaterProduction.getName() + " | " +
+                            theaterProduction.getTheater_name() + " | " +
+                            theaterProduction.getRating());
+                    tvTitle.setText(theaterProduction.getName() + " | " +
+                            theaterProduction.getTheater_name() + " | " +
+                            theaterProduction.getRating());
+                    break;
+                case "Genre":
+                    Genre genre = (Genre) item;
+                    Log.d(TAG,genre.getId_genre() + " | " + genre.getName_genre());
+                    tvTitle.setText(genre.getId_genre() + " | " + genre.getName_genre());
+                    break;
+                default:
+                    Log.d(TAG,"default");
+                    tvTitle.setText("default");
+                    break;
+            }
         }
 
         @Override
@@ -86,8 +105,8 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MyViewHolder> 
         }*/
     }
 
-    public void updateAdapter(List<Genre> newList) { // Обновление списка
-       this.mainArray = newList;
+    public void updateAdapter(List<Item> newList) { // Обновление списка
+        this.mainArray = newList;
         //notifyDataSetChanged();
     }
 }

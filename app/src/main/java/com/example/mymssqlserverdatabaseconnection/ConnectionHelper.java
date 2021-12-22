@@ -29,7 +29,7 @@ public class ConnectionHelper {
     String username, password, ip, port, database, classes, url;
 
     public Connection connection(){
-        ip = "192.168.0.29";
+        ip = "192.168.1.76";//"192.168.0.29";
         username = "theater_admin";
         password = "25456585";
         database = "Theater_DB";

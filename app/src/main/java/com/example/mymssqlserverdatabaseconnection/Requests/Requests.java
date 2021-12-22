@@ -10,9 +10,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Requests {
-    private ConnectionHelper connectionHelper;
-    Connection connection;
-    String connectionResult = "";
+    //private ConnectionHelper connectionHelper;
+    //Connection connection;
+    //String connectionResult = "";
 
 
 
