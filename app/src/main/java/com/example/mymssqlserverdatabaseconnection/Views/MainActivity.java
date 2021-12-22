@@ -56,23 +56,25 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(Item item) {
                 switch (item.getItemType()) {
-                    /*case "TheaterProduction":
+                    case "TheaterProduction":
                         Intent intent = new Intent(MainActivity.this, TheaterProductionDetailActivity.class);
                         TheaterProduction theaterProduction = (TheaterProduction) item;
-                        intent.putExtra("id", theaterProduction.getId_theater_production());
-                        intent.putExtra("itemText", theaterProduction.getId_genre());
-                        intent.putExtra("nameAuthor", theaterProduction.getId_age_category());
-                        intent.putExtra("lastnameAuthor", theaterProduction.getName());
-                        intent.putExtra("image", theaterProduction.getTheater_name());
-                        intent.putExtra("title", theaterProduction.getDescription());
-                        intent.putExtra("title", theaterProduction.getRating());
-                        intent.putExtra("title", theaterProduction.getDuration());
-                        intent.putExtra("title", theaterProduction.getStart_time());
-                        intent.putExtra("title", theaterProduction.getDirector());
+                        Log.d(TAG, theaterProduction.getId_theater_production() +
+                                " " + theaterProduction.getName());
+                        intent.putExtra("id_theater_production", theaterProduction.getId_theater_production());
+                        intent.putExtra("id_genre", theaterProduction.getId_genre());
+                        intent.putExtra("id_age_category", theaterProduction.getId_age_category());
+                        intent.putExtra("name", theaterProduction.getName());
+                        intent.putExtra("theater_name", theaterProduction.getTheater_name());
+                        intent.putExtra("description", theaterProduction.getDescription());
+                        intent.putExtra("rating", theaterProduction.getRating());
+                        intent.putExtra("duration", theaterProduction.getDuration());
+                        intent.putExtra("start_time", theaterProduction.getStart_time());
+                        intent.putExtra("director", theaterProduction.getDirector());
                         startActivity(intent);
-                        break;*/
+                        break;
                     case "Genre":
-                        Intent intent = new Intent(MainActivity.this, GenreDetailActivity.class);
+                        intent = new Intent(MainActivity.this, GenreDetailActivity.class);
                         Genre genre = (Genre) item;
                         Log.d(TAG, genre.getId_genre() + "");
                         intent.putExtra("id_genre", genre.getId_genre());

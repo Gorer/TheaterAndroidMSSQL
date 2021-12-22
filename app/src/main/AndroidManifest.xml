@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyMSSQLServerDatabaseConnection">
         <activity
+            android:name=".Views.TheaterProductionDetailActivity"
+            android:exported="false" />
+        <activity
             android:name=".Views.GenreDetailActivity"
             android:exported="false" />
         <activity

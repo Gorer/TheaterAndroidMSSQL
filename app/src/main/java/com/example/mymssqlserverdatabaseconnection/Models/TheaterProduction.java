@@ -36,9 +36,9 @@ public class TheaterProduction implements Item {
         return id_theater_production;
     }
 
-    /*public void setId_theater_production(int id_theater_production) {
+    public void setId_theater_production(int id_theater_production) {
         this.id_theater_production = id_theater_production;
-    }*/
+    }
 
     public int getId_genre() {
         return id_genre;

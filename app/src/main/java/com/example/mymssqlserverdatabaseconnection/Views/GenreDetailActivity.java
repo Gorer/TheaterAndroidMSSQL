@@ -27,7 +27,7 @@ public class GenreDetailActivity extends AppCompatActivity {
 
         idGenre = findViewById(R.id.textViewIdGenre);
         nameGenre = findViewById(R.id.editTextNameGenre);
-        change = findViewById(R.id.buttonChange);
+        change = findViewById(R.id.buttonChangeGenre);
         //Получаем данные из Intent'а и проверяем на наличие id
         Intent intent = getIntent();
         if(intent != null && intent.hasExtra("id_genre")) {
@@ -39,20 +39,8 @@ public class GenreDetailActivity extends AppCompatActivity {
 
         id = intent.getIntExtra("id_genre",-1);
         String name_genre;
-        //int id_genre;
-        //String lastnameGenre;
         name_genre = intent.getStringExtra("name_genre");
-        //id_genre = intent.getIntExtra();
         idGenre.setText(id +"");
         nameGenre.setText(name_genre);
-        //quoteText.setText(intent.getStringExtra("quoteText"));
-        //title.setText(intent.getStringExtra("title"));
-        /*try {
-            Picasso.get().load(intent.getStringExtra("image")).into(imageView);
-            //imageView.setImageURI(Uri.parse(intent.getStringExtra("image")));
-        }
-        catch (NullPointerException e){
-
-        }*/
     }
 }

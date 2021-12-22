@@ -74,9 +74,19 @@ public class MainViewModel extends AndroidViewModel {
     private void addTheaterProduction(List<Item> items, ResultSet resultSet) throws SQLException {
         TheaterProduction item = new TheaterProduction();
         Log.d(TAG, item.getItemType());
+        item.setId_theater_production(resultSet.getInt("id_theater_production"));
+        item.setId_genre(resultSet.getInt("id_genre"));
+        item.setId_age_category(resultSet.getInt("id_age_category"));
         item.setName(resultSet.getString("name"));
         item.setTheater_name(resultSet.getString("theater_name"));
+
+        //Log.d(TAG, "BUUUUUUG: " + resultSet.getString("theater_name"));
+
+        item.setDescription(resultSet.getString("description"));
         item.setRating(resultSet.getInt("rating"));
+        item.setDuration(resultSet.getString("duration"));
+        item.setStart_time(resultSet.getString("start_time"));
+        item.setDirector(resultSet.getString("director"));
         Log.d(TAG, item.getName() + " | " +
                 item.getTheater_name() + " | " + item.getRating());
         items.add(item);
