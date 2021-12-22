@@ -106,14 +106,6 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MyViewHolder> 
         public void onClick(View view) {
             //Intent intent = new Intent(context, )
         }
-
-        /*@Override
-        public void onClick(View v) { // при нажатии на элемент передается ID заметки из бд и переходит на экран изменения
-            Intent i = new Intent(context, GenreActivity.class);
-            i.putExtra("airlineId", localFlight.getId_genre());
-            i.putExtra("routeId", localFlight.getId_route_pfk());
-            context.startActivity(i);
-        }*/
     }
 
     public interface OnItemClickListener {
@@ -126,6 +118,5 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MyViewHolder> 
 
     public void updateAdapter(List<Item> newList) { // Обновление списка
         this.mainArray = newList;
-        //notifyDataSetChanged();
     }
 }

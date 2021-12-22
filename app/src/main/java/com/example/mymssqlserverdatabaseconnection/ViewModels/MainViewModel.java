@@ -91,30 +91,6 @@ public class MainViewModel extends AndroidViewModel {
                 item.getTheater_name() + " | " + item.getRating());
         items.add(item);
     }
-
-    public List<Genre> getGenresFromDb(String tableName, String searchText) {
-        List<Genre> genres = new ArrayList<>();
-        try {
-            connection = connectionHelper.connection();
-            if (connection != null) {
-                Statement statement = connection.createStatement();
-                ResultSet resultSet = statement.executeQuery(Requests.SEARCH(tableName, searchText));
-                while (resultSet.next()) {
-                    Genre item = new Genre();
-                    item.setId_genre(resultSet.getInt("id_genre"));
-                    item.setName_genre(resultSet.getString("name_genre"));
-                    Log.d(TAG, item.getId_genre() + item.getName_genre());
-                    genres.add(item);
-                }
-            }
-            else {
-                connectionResult = "Check your connection";
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return genres;
-    }
 }
 
 

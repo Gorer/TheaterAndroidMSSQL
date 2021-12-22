@@ -14,11 +14,7 @@ public class Requests {
     //Connection connection;
     //String connectionResult = "";
 
-
-
     public static String SEARCH(String tableName, String text) {
-
-
         switch (tableName) {
             case "theater_production":
                 return "select * from theater_production where concat(id_theater_production, " +
@@ -46,25 +42,90 @@ public class Requests {
         }
     }
 
-    /*public List<Genre> getGenresFromDb(String tableName, String searchText) {
-        List<Genre> genres = new ArrayList<>();
-        try {
-            connection = connectionHelper.connection();
-            if (connection != null) {
-                Statement statement = connection.createStatement();
-                ResultSet resultSet = statement.executeQuery(Requests.SEARCH(tableName, searchText));
-                while (resultSet.next()) {
-                    Genre item = new Genre();
-                    item.setId_genre(resultSet.getInt("id_genre"));
-                    item.setName_genre(resultSet.getString("name_genre"));
-                    genres.add(item);
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
+    public static String UPDATE(String tableName, String field, String value, int id) {
+        switch (tableName) {
+            case "theater_production":
+                // UPDATE goods SET price = 150 WHERE num = 2
+                return "UPDATE " + tableName + " SET " + field + " = " + "'" +
+                        value + "'" + " WHERE id_theater_production = " + id + ";";
+            case "genres":
+                return "UPDATE " + tableName + " SET " + field + " = " + "'" +
+                        value + "'" + " WHERE id_genre = " + id+ ";";
+            case "age_categories":
+                return "UPDATE " + tableName + " SET " + field + " = " + "'" +
+                        value + "'" + " WHERE id_age_category = " + id+ ";";
+            case "feedbacks":
+                return "UPDATE " + tableName + " SET " + field + " = " + "'" +
+                        value + "'" + " WHERE id_feedback = " + id+ ";";
+            case "comments":
+                return "UPDATE " + tableName + " SET " + field + " = " + "'" +
+                        value + "'" + " WHERE id_comment = " + id+ ";";
+            case "adress_theater_production":
+                return "UPDATE " + tableName + " SET " + field + " = " + "'" +
+                        value + "'" + " WHERE id_adress_theater_production = " + id+ ";";
+            case "tickets":
+                return "UPDATE " + tableName + " SET " + field + " = " + "'" +
+                        value + "'" + " WHERE id_ticket = " + id+ ";";
+            default:
+                return null;
         }
-        return genres;
-    }*/
+    }
+
+    public static String UPDATE(String tableName, String field, int value, int id) {
+        switch (tableName) {
+            case "theater_production":
+                return "UPDATE " + tableName + " SET " + field + " = " +
+                        value + " WHERE id_theater_production = " + id + ";";
+            case "genres":
+                return "UPDATE " + tableName + " SET " + field + " = " +
+                        value + " WHERE id_genre = " + id + ";";
+            case "age_categories":
+                return "UPDATE " + tableName + " SET " + field + " = " +
+                        value + " WHERE id_age_category = " + id + ";";
+            case "feedbacks":
+                return "UPDATE " + tableName + " SET " + field + " = " +
+                        value + " WHERE id_feedback = " + id + ";";
+            case "comments":
+                return "UPDATE " + tableName + " SET " + field + " = " +
+                        value + " WHERE id_comment = " + id + ";";
+            case "adress_theater_production":
+                return "UPDATE " + tableName + " SET " + field + " = " +
+                        value + " WHERE id_adress_theater_production = " + id + ";";
+            case "tickets":
+                return "UPDATE " + tableName + " SET " + field + " = " +
+                        value + " WHERE id_ticket = " + id + ";";
+            default:
+                return null;
+        }
+    }
+
+    public static String UPDATE(String tableName, String field, float value, int id) {
+        switch (tableName) {
+            case "theater_production":
+                return "UPDATE " + tableName + " SET " + field + " = " +
+                        value + " WHERE id_theater_production = " + id + ";";
+            case "genres":
+                return "UPDATE " + tableName + " SET " + field + " = " +
+                        value + " WHERE id_genre = " + id + ";";
+            case "age_categories":
+                return "UPDATE " + tableName + " SET " + field + " = " +
+                        value + " WHERE id_age_category = " + id + ";";
+            case "feedbacks":
+                return "UPDATE " + tableName + " SET " + field + " = " +
+                        value + " WHERE id_feedback = " + id + ";";
+            case "comments":
+                return "UPDATE " + tableName + " SET " + field + " = " +
+                        value + " WHERE id_comment = " + id + ";";
+            case "adress_theater_production":
+                return "UPDATE " + tableName + " SET " + field + " = " +
+                        value + " WHERE id_adress_theater_production = " + id + ";";
+            case "tickets":
+                return "UPDATE " + tableName + " SET " + field + " = " +
+                        value + " WHERE id_ticket = " + id + ";";
+            default:
+                return null;
+        }
+    }
 }
 
 
