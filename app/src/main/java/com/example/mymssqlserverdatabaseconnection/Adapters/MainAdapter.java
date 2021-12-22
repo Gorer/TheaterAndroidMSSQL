@@ -25,6 +25,7 @@ import java.util.List;
 public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MyViewHolder> {
     private final Context context;
     private List<Item> mainArray;
+    private OnItemClickListener listener;
 
     // Адаптер, отвечающий за заполнение списка recyclerView1
     public MainAdapter(Context context) {
@@ -55,7 +56,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MyViewHolder> 
     }
 
     // Класс, отвечающий за отдельный элемент
-    static class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private final TextView tvTitle;
         private final Context context;
 
@@ -64,6 +65,16 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MyViewHolder> 
             this.context = context;
             tvTitle = itemView.findViewById(R.id.tvTitle);
             itemView.setOnClickListener(this);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int position=getAdapterPosition();
+                    if(listener!=null && position!=RecyclerView.NO_POSITION){
+                        listener.onItemClick(mainArray.get(position));
+                    }
+                }
+            });
         }
 
         @SuppressLint("SetTextI18n")
@@ -93,7 +104,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MyViewHolder> 
 
         @Override
         public void onClick(View view) {
-
+            //Intent intent = new Intent(context, )
         }
 
         /*@Override
@@ -103,6 +114,14 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MyViewHolder> 
             i.putExtra("routeId", localFlight.getId_route_pfk());
             context.startActivity(i);
         }*/
+    }
+
+    public interface OnItemClickListener {
+        void onItemClick(Item item);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener){
+        this.listener = listener;
     }
 
     public void updateAdapter(List<Item> newList) { // Обновление списка

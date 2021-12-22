@@ -1,8 +1,10 @@
-package com.example.mymssqlserverdatabaseconnection;
+package com.example.mymssqlserverdatabaseconnection.Views;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.example.mymssqlserverdatabaseconnection.R;
 
 public class AuthorizationActivity extends AppCompatActivity {
 

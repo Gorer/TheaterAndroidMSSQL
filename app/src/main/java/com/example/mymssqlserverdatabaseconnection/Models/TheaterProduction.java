@@ -18,10 +18,12 @@ public class TheaterProduction implements Item {
     private String theater_name;
     private String description;
     private float rating;
-    private Time duration;
+    private String duration;
+    //private Time duration;
     //@DateTimeFormat(pattern = "dd.MM.yyyy HH:mm", iso = DateTimeFormat.ISO.DATE_TIME)
     //@JsonFormat(pattern = "dd.MM.yyyy HH:mm")
-    private DateTime start_time;
+    //private DateTime start_time;
+    private String start_time;
     private String director;
 
     private int name_length = 255;
@@ -86,19 +88,19 @@ public class TheaterProduction implements Item {
         this.rating = rating;
     }
 
-    public Time getDuration() {
+    public String getDuration() {
         return duration;
     }
 
-    public void setDuration(Time duration) {
+    public void setDuration(String duration) {
         this.duration = duration;
     }
 
-    public DateTime getStart_time() {
+    public String getStart_time() {
         return start_time;
     }
 
-    public void setStart_time(DateTime start_time) {
+    public void setStart_time(String start_time) {
         this.start_time = start_time;
     }
 

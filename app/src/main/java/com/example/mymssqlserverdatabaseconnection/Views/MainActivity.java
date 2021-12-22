@@ -1,4 +1,4 @@
-package com.example.mymssqlserverdatabaseconnection;
+package com.example.mymssqlserverdatabaseconnection.Views;
 
 import static android.content.ContentValues.TAG;
 
@@ -13,62 +13,35 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TextView;
 
 import com.example.mymssqlserverdatabaseconnection.Adapters.MainAdapter;
 import com.example.mymssqlserverdatabaseconnection.Models.Genre;
 import com.example.mymssqlserverdatabaseconnection.Models.Item;
-import com.example.mymssqlserverdatabaseconnection.Requests.Requests;
+import com.example.mymssqlserverdatabaseconnection.Models.TheaterProduction;
+import com.example.mymssqlserverdatabaseconnection.R;
 import com.example.mymssqlserverdatabaseconnection.ViewModels.MainViewModel;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
     private MainAdapter mainAdapter;
     private MainViewModel mainViewModel;
-    //private RecyclerView textView;
     private EditText editTextSearch;
-    private String tableName;// = "genres";
+    private String tableName;
     private Spinner spinnerTables;
-    private String searchText;// = "genres";
+    private String searchText;
     private RecyclerView rcView;
-    //private Requests requestsObject;
-
-    //private Connection connection = null;
-    //private ConnectionHelper connectionHelper;
-    //String connectionResult = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //mainViewModel = new ViewModelProvider(this).get(MainViewModel.class);
-        /*try {
-            mainAdapter = new MainAdapter(this);
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-            System.out.println("caught");
-        }*/
-
         editTextSearch = findViewById(R.id.editTextSearch);
         spinnerTables = findViewById(R.id.spinnerTables);
         initRecyclerView();
-        /*rcView = findViewById(R.id.recyclerViewResult);
-        rcView.setAdapter(mainAdapter);
-        rcView.setLayoutManager(new LinearLayoutManager(this));*/
     }
-    /*@Override
-    public void onResume() {
-        super.onResume();
-        setRcView();
-    }*/
 
     private void initRecyclerView() {
         rcView = findViewById(R.id.recyclerViewResult);
@@ -78,12 +51,40 @@ public class MainActivity extends AppCompatActivity {
         rcView.setAdapter(mainAdapter);
         mainViewModel = new ViewModelProvider(this).get(MainViewModel.class);
         setRcView();
+
+        mainAdapter.setOnItemClickListener(new MainAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(Item item) {
+                switch (item.getItemType()) {
+                    /*case "TheaterProduction":
+                        Intent intent = new Intent(MainActivity.this, TheaterProductionDetailActivity.class);
+                        TheaterProduction theaterProduction = (TheaterProduction) item;
+                        intent.putExtra("id", theaterProduction.getId_theater_production());
+                        intent.putExtra("itemText", theaterProduction.getId_genre());
+                        intent.putExtra("nameAuthor", theaterProduction.getId_age_category());
+                        intent.putExtra("lastnameAuthor", theaterProduction.getName());
+                        intent.putExtra("image", theaterProduction.getTheater_name());
+                        intent.putExtra("title", theaterProduction.getDescription());
+                        intent.putExtra("title", theaterProduction.getRating());
+                        intent.putExtra("title", theaterProduction.getDuration());
+                        intent.putExtra("title", theaterProduction.getStart_time());
+                        intent.putExtra("title", theaterProduction.getDirector());
+                        startActivity(intent);
+                        break;*/
+                    case "Genre":
+                        Intent intent = new Intent(MainActivity.this, GenreDetailActivity.class);
+                        Genre genre = (Genre) item;
+                        Log.d(TAG, genre.getId_genre() + "");
+                        intent.putExtra("id_genre", genre.getId_genre());
+                        intent.putExtra("name_genre", genre.getName_genre());
+                        startActivity(intent);
+                        break;
+                }
+            }
+        });
     }
 
     private void setRcView(){
-        //rcView = findViewById(R.id.recyclerViewResult);
-        //List<Genre> genres = mainViewModel.getGenresFromDb(tableName, searchText);
-//getItemsFromDb
         List<Item> items = mainViewModel.getItemsFromDb(tableName, searchText);
         if (!items.isEmpty()){
             Log.d(TAG, "items != null");
@@ -109,26 +110,4 @@ public class MainActivity extends AppCompatActivity {
         setTableName();
         setRcView();
     }
-
-    /*public void sqlButton(View view){
-        connection = connectionHelper.connection();
-        searchText = editTextSearch.getText().toString();
-        setTableName();
-        if (connection!=null) {
-            Statement statement = null;
-            try {
-                statement = connection.createStatement();
-                ResultSet resultSet = statement.executeQuery(
-                         Requests.SEARCH(tableName, searchText));
-                while (resultSet.next()) {
-                    textView.setText(resultSet.getString("theater_name"));
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-        else {
-            textView.setText("Connection is null");
-        }
-    }*/
 }
