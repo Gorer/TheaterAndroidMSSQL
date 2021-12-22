@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.mymssqlserverdatabaseconnection">
+    package="com.example.mymssqlserverdatabaseconnection" >
 
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -10,7 +10,22 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.MyMSSQLServerDatabaseConnection">
+        android:theme="@style/Theme.MyMSSQLServerDatabaseConnection" >
+        <activity
+            android:name=".Views.AdminActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Views.UserThProdDetailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Views.UserActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Views.Reg"
+            android:exported="false" />
+        <activity
+            android:name=".Views.Sign"
+            android:exported="false" />
         <activity
             android:name=".Views.TheaterProductionDetailActivity"
             android:exported="false" />
@@ -22,7 +37,7 @@
             android:exported="false" />
         <activity
             android:name=".Views.MainActivity"
-            android:exported="true">
+            android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

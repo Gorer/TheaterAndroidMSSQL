@@ -60,11 +60,6 @@ public class TheaterProductionDetailActivity extends AppCompatActivity {
                         String fields[];
 
                         Statement st = connection.createStatement();
-                        ResultSet rs;
-                        //for (int i = 0; i < 9; i++) {
-                        //Log.d(TAG, "BUUUUUUG");
-                        //Log.d(TAG, Integer.parseInt(editTextIdGenreThPr.getText().toString()) + "");
-                        //Log.d(TAG, Integer.parseInt(textViewIdTheaterProduction.getText().toString()) + "");
                         st.executeUpdate(Requests.UPDATE(tableName,"id_genre",
                                 Integer.parseInt(editTextIdGenreThPr.getText().toString()),
                                 Integer.parseInt(textViewIdTheaterProduction.getText().toString())));
